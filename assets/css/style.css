@@ -15,7 +15,7 @@ body{
     display: grid;
     place-items: center;
     height: 100vh;
-    background-color: #FFFDD5;
+    background-color: #F2D09D;
     font-family: 'Poppins', sans-serif;
 
 }
@@ -23,21 +23,21 @@ body{
 .container{
     padding: 20px;
     width: 450px;
-    background-color: #1B4D3E;
+    background-color: #461708;
     border-radius: 50px;
     position: relative;
     overflow: hidden;
     max-height: 120px;
     transition:0.4s; 
     box-shadow:  0 0 5px #111, 0 0 10px #111, 0 0 5px #111;
-    border: 1px solid #1B4D3E;
+    border: 1px solid #461708;
 }
 
 .container .see_content{
     padding: 10px;
     width:120px;
     height:35px ;
-    background-color: #FFD0A3;
+    background-color: #EF8428;
     color: #fff;
     position: absolute;
     top: 0px;
@@ -57,7 +57,7 @@ body{
     height: 100%;
     content: '';
     width: 100%;
-    background-image: linear-gradient(90deg,transparent,#FFFDD5,transparent);
+    background-image: linear-gradient(90deg,transparent,#F2D09D,transparent);
     top: 0;
     left: -100%;
     transition:0.7s; 
@@ -79,7 +79,7 @@ body{
     width:80px;
     padding:10px;
     border-radius:20px;
-    background-color: #1B4D3E;
+    background-color: #461708;
     position: relative;
     /* overflow: hidden; */
     display: grid;
@@ -98,7 +98,7 @@ body{
     font-size: 12px;
     text-align: center;
     color: #fff;
-    background-color: #FFD0A3;
+    background-color: #EF8428;
     border-radius: 5px;
 
 }
@@ -112,7 +112,7 @@ body{
 
 .container  .divider{
     height: 1px;
-    background-color: #FFD0A3;
+    background-color: #EF8428;
     margin-top: 20px;
     margin-bottom: 20px;
 }
@@ -144,7 +144,7 @@ body{
     align-items: center;
     justify-content: center;
     display: flex;
-    background-color: #FFD0A3;
+    background-color: #EF8428;
     border-radius: 10px;
 }
 
@@ -186,7 +186,7 @@ body{
 .social_media .facebook{
     height: 50px;
     width: 50px;
-    background-color: #FFD0A3;
+    background-color: #EF8428;
     display: grid;
     place-items: center;
     border-radius: 50%;
@@ -211,7 +211,7 @@ body{
 .social_media .x{
     height: 50px;
     width: 50px;
-    background-color: #FFD0A3;
+    background-color: #EF8428;
     display: grid;
     place-items: center;
     border-radius: 50%;
@@ -224,7 +224,7 @@ body{
 .social_media .instagram{
     height: 50px;
     width: 50px;
-    background-color: #FFD0A3;
+    background-color: #EF8428;
     display: grid;
     place-items: center;
     border-radius: 50%;
