@@ -128,13 +128,29 @@
     <div id="catalog-section" class="catalog-container hidden opacity-0 w-full p-4 md:p-8">
         <h1 class="text-4xl font-extrabold text-center mb-8 text-purple-300">Catálogo de Horrores Lovecraftianos</h1>
 
-        <!-- Barra de búsqueda/filtro -->
-        <div class="mb-8 flex justify-center">
-            <!-- Contenedor adicional para estabilizar el ancho del input -->
-            <div class="max-w-xl w-full">
-                <input type="text" id="filter-input" placeholder="Filtrar monstruos por nombre o descripción..."
+        <!-- Contenedores de filtro -->
+        <div class="mb-8 flex flex-col sm:flex-row justify-center items-center gap-4">
+            <!-- Filtro por Nombre -->
+            <div class="max-w-xl w-full sm:w-1/2">
+                <label for="filter-input" class="block text-gray-300 text-sm font-bold mb-2">Filtrar por Nombre:</label>
+                <input type="text" id="filter-input" placeholder="Buscar por nombre..."
                        class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-100 leading-tight
                               focus:outline-none focus:ring-2 focus:ring-purple-500 bg-gray-700 border-gray-600">
+            </div>
+
+            <!-- Filtro por Categoría -->
+            <div class="max-w-xl w-full sm:w-1/2">
+                <label for="category-select" class="block text-gray-300 text-sm font-bold mb-2">Filtrar por Categoría:</label>
+                <select id="category-select"
+                        class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-100 leading-tight
+                               focus:outline-none focus:ring-2 focus:ring-purple-500 bg-gray-700 border-gray-600">
+                    <option value="">Todas las Categorías</option>
+                    <option value="Dioses Exteriores">Dioses Exteriores</option>
+                    <option value="Primigenios (Great Old Ones)">Primigenios (Great Old Ones)</option>
+                    <option value="Razas alienígenas">Razas alienígenas</option>
+                    <option value="Criaturas menores">Criaturas menores</option>
+                    <option value="Entidades del tiempo/espacio">Entidades del tiempo/espacio</option>
+                </select>
             </div>
         </div>
 
@@ -166,11 +182,12 @@
             const errorMessage = document.getElementById('error-message');
             const monsterCardsContainer = document.getElementById('monster-cards-container');
             const filterInput = document.getElementById('filter-input');
+            const categorySelect = document.getElementById('category-select'); // Nuevo: select de categoría
 
             // Referencias a elementos del modal
             const monsterDetailModal = document.getElementById('monster-detail-modal');
             const closeModalButton = document.getElementById('close-modal-button');
-            const modalDetailsContent = document.getElementById('modal-details-content'); // Nuevo contenedor para detalles
+            const modalDetailsContent = document.getElementById('modal-details-content');
 
             // Contraseña requerida
             const CORRECT_PASSWORD = 'hsb';
@@ -179,6 +196,7 @@
             const monsters = [
                 {
                     name: "Cthulhu",
+                    category: "Primigenios (Great Old Ones)",
                     alias: ["Gran Sacerdote de los Antiguos", "El Que Espera Soñando"],
                     entityType: "Primigenio",
                     description: "Una entidad cósmica antigua, Gran Sacerdote de los Antiguos, que yace dormido en la ciudad sumergida de R'lyeh.",
@@ -201,6 +219,7 @@
                 },
                 {
                     name: "Azathoth",
+                    category: "Dioses Exteriores",
                     alias: ["El Caos Nuclear", "El Dios Ciego e Idiota", "El Demon Sultan"],
                     entityType: "Dios Exterior (Deidad Suprema)",
                     description: "El 'Demon Sultan', la deidad suprema de los Mitos de Cthulhu, que existe en el centro del universo.",
@@ -223,11 +242,12 @@
                 },
                 {
                     name: "Nyarlathotep",
+                    category: "Dioses Exteriores",
                     alias: ["El Caos Reptante", "El Mensajero Exterior", "El Dios de las Mil Formas"],
                     entityType: "Dios Exterior (Avatar/Mensajero)",
                     description: "El 'Caos Reptante', una deidad cambiante y astuta, con mil formas, que sirve como mensajero y avatar de Azathoth.",
                     fullDescription: "Nyarlathotep es único entre los Dioses Exteriores por su activo contacto con la humanidad. Conocido como el 'Caos Reptante', toma mil formas y es el mensajero, el alma y el corazón de Azathoth. Viaja por el cosmos y se deleita en la locura y la desesperación que causa. A menudo se le representa como un hombre alto y delgado, pero puede manifestarse como una criatura Lovecraftiana indescriptible o como cualquier forma imaginable. Es un ser cruel, manipulador e inteligente, a diferencia de Azathoth.",
-                    image: "https://placehold.co/2048x2048/1e293b/a78bfa?text=Nyarlathotep",
+                    image: "assets/img/Nyarlathotep_1.png",
                     firstAppearance: "Nyarlathotep (1920)",
                     origin: "El Vacío Exterior",
                     affiliation: "Sirviente y avatar de Azathoth",
@@ -245,6 +265,7 @@
                 },
                 {
                     name: "Yog-Sothoth",
+                    category: "Dioses Exteriores",
                     alias: ["El Todo en Uno", "El Uno en Todo", "El Que Abre el Camino", "La Llave y la Puerta"],
                     entityType: "Dios Exterior (Omnisciente, Espacio-Tiempo)",
                     description: "Una deidad exterior omnisciente, con un conocimiento ilimitado, que existe simultáneamente en todas las dimensiones y en todos los tiempos.",
@@ -267,6 +288,7 @@
                 },
                 {
                     name: "Shoggoth",
+                    category: "Criaturas menores",
                     alias: ["Las Grandes Cosas de las Estrellas"],
                     entityType: "Criatura menor (construcción biológica)",
                     description: "Una masa protoplásmica amorfa y multi-ojos, creada por los Antiguos para ser sus sirvientes. Son capaces de formar cualquier órgano que necesiten y pueden imitar voces y formas.",
@@ -289,6 +311,7 @@
                 },
                 {
                     name: "Hastur",
+                    category: "Primigenios (Great Old Ones)",
                     alias: ["El Innombrable", "El Rey de Amarillo", "Él que No Debe Ser Nombrado"],
                     entityType: "Primigenio",
                     description: "El 'Innombrable', una entidad cósmica asociada con Carcosa y el lago Hali. Es un Gran Antiguo, a menudo invocado por cultistas.",
@@ -311,6 +334,7 @@
                 },
                 {
                     name: "Dagon",
+                    category: "Primigenios (Great Old Ones)", // Se podría clasificar aquí o como "Deidad menor"
                     alias: ["Padre Dagon", "Dagan"],
                     entityType: "Deidad menor (Primigenio antiguo / Semidios)",
                     description: "Una deidad menor, a menudo adorada por los Profundos, criaturas mitad pez, mitad anfibio que habitan en las profundidades del océano.",
@@ -333,6 +357,7 @@
                 },
                 {
                     name: "Los Profundos",
+                    category: "Razas alienígenas",
                     alias: ["Deep Ones", "Gente de las Profundidades"],
                     entityType: "Criaturas menores (raza híbrida anfibio-humana)",
                     description: "Una raza de criaturas anfibias humanoides que habitan en las ciudades submarinas. Son inmortales y se reproducen con humanos, creando híbridos.",
@@ -342,7 +367,6 @@
                     origin: "Los océanos de la Tierra, con posible origen cósmico antiguo",
                     affiliation: "Sirvientes de Dagon y Madre Hydra; aliados de Cthulhu",
                     supernaturalCharacteristics: ["Inmortalidad (a menos que sean destruidos)", "Adaptación a entornos acuáticos", "Hibridación con humanos"],
-                    knownManifestations: ["Infiltración en comunidades costeras", "Apariciones en sus formas híbridas o completas"],
                     madnessLevel: "Bajo a Medio (terror, shock, eventual transformación)",
                     associatedSymbols: ["Joyas y artefactos de oro y plata con diseños marinos", "Rasgos faciales y corporales deformes"],
                     cults: ["Culto de Dagon (principalmente en Innsmouth y otras comunidades pesqueras)"],
@@ -360,7 +384,31 @@
                 errorMessage.classList.toggle('hidden', !show);
             };
 
-            // Función para renderizar las tarjetas de monstruos (ahora con soporte para filtro)
+            // Función principal para aplicar los filtros y renderizar las tarjetas
+            const applyFiltersAndRenderCards = () => {
+                const searchTerm = filterInput.value.toLowerCase();
+                const selectedCategory = categorySelect.value; // Obtener el valor seleccionado del dropdown
+
+                let filteredMonsters = monsters;
+
+                // Aplicar filtro por nombre
+                if (searchTerm) {
+                    filteredMonsters = filteredMonsters.filter(monster =>
+                        monster.name.toLowerCase().includes(searchTerm)
+                    );
+                }
+
+                // Aplicar filtro por categoría
+                if (selectedCategory) { // Si hay una categoría seleccionada (no "Todas las Categorías")
+                    filteredMonsters = filteredMonsters.filter(monster =>
+                        monster.category === selectedCategory
+                    );
+                }
+
+                renderMonsterCards(filteredMonsters);
+            };
+
+            // Función para renderizar las tarjetas de monstruos
             const renderMonsterCards = (filteredMonsters = monsters) => {
                 monsterCardsContainer.innerHTML = ''; // Limpiar cualquier tarjeta existente
                 if (filteredMonsters.length === 0) {
@@ -407,6 +455,7 @@
                                 <p class="modal-text"><b>Nombre:</b> ${selectedMonster.name}</p>
                                 ${selectedMonster.alias && selectedMonster.alias.length > 0 ? `<p class="modal-text"><b>Alias o nombres alternativos:</b> ${selectedMonster.alias.join(', ')}</p>` : ''}
                                 <p class="modal-text"><b>Tipo de entidad:</b> ${selectedMonster.entityType}</p>
+                                ${selectedMonster.category ? `<p class="modal-text"><b>Categoría:</b> ${selectedMonster.category}</p>` : ''}
 
                                 <h3 class="modal-section-title">🌌 Origen y cosmología</h3>
                                 <p class="modal-text"><b>Primera aparición:</b> ${selectedMonster.firstAppearance}</p>
@@ -490,7 +539,7 @@
                         catalogSection.classList.remove('hidden');
                         setTimeout(() => {
                             catalogSection.classList.add('opacity-100');
-                            renderMonsterCards();
+                            applyFiltersAndRenderCards(); // Llama a la función de filtrado combinada
                         }, 50);
                     }, 500);
                 } else {
@@ -506,19 +555,11 @@
                 }
             });
 
-            // Manejador del campo de filtro
-            filterInput.addEventListener('input', (event) => {
-                const searchTerm = event.target.value.toLowerCase();
-                const filteredMonsters = monsters.filter(monster =>
-                    monster.name.toLowerCase().includes(searchTerm) ||
-                    monster.description.toLowerCase().includes(searchTerm) ||
-                    (monster.fullDescription && monster.fullDescription.toLowerCase().includes(searchTerm)) ||
-                    (monster.alias && monster.alias.some(a => a.toLowerCase().includes(searchTerm))) ||
-                    (monster.cults && monster.cults.some(c => c.toLowerCase().includes(searchTerm))) ||
-                    (monster.relatedAuthors && monster.relatedAuthors.some(a => a.toLowerCase().includes(searchTerm)))
-                );
-                renderMonsterCards(filteredMonsters);
-            });
+            // Manejador del campo de filtro por nombre
+            filterInput.addEventListener('input', applyFiltersAndRenderCards);
+
+            // Manejador del filtro por categoría (dropdown)
+            categorySelect.addEventListener('change', applyFiltersAndRenderCards);
 
             // Manejador para cerrar el modal usando el botón X
             closeModalButton.addEventListener('click', closeMonsterDetailModal);
